@@ -1,1 +1,1132 @@
-# pairofjeans.github.io
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tokyo April 2026 — Group Itinerary</title>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1814;
+    --paper: #f7f4ee;
+    --muted: #8c8880;
+    --faint: #e8e4dc;
+    --accent: #c84b2f;
+    --accent2: #2a6049;
+    --gold: #b8923a;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.6;
+  }
+
+  .hero {
+    padding: 80px 40px 60px;
+    max-width: 900px;
+    margin: 0 auto;
+    border-bottom: 1px solid var(--faint);
+  }
+
+  .hero-kana {
+    font-size: 12px;
+    letter-spacing: .25em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .hero h1 {
+    font-family: 'Shippori Mincho', serif;
+    font-size: clamp(36px, 6vw, 64px);
+    font-weight: 600;
+    line-height: 1.1;
+    margin-bottom: 28px;
+    letter-spacing: -.01em;
+  }
+
+  .hero h1 span { color: var(--accent); }
+
+  .hero-meta {
+    display: flex;
+    gap: 32px;
+    flex-wrap: wrap;
+    margin-bottom: 28px;
+  }
+
+  .meta-item { display: flex; flex-direction: column; gap: 2px; }
+
+  .meta-label {
+    font-size: 10px;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .meta-value { font-size: 14px; font-weight: 500; }
+
+  .diet-list {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 2;
+  }
+
+  .diet-list span {
+    margin-right: 24px;
+  }
+
+  .diet-list span strong {
+    color: var(--ink);
+    font-weight: 500;
+  }
+
+  /* SECTION */
+  .section {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 60px 40px;
+    border-bottom: 1px solid var(--faint);
+  }
+
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+
+  .section-num {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 44px;
+    color: var(--faint);
+    line-height: 1;
+    flex-shrink: 0;
+  }
+
+  .section-title {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 24px;
+    font-weight: 600;
+  }
+
+  /* LEGEND */
+  .legend {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-bottom: 24px;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 11px;
+    color: var(--muted);
+  }
+
+  .legend-dot { width: 10px; height: 3px; border-radius: 2px; }
+
+  /* DAY ROWS */
+  .days-grid { display: flex; flex-direction: column; gap: 3px; }
+
+  .day-row {
+    background: white;
+    border: 1px solid var(--faint);
+    border-radius: 4px;
+    overflow: hidden;
+    transition: border-color .2s;
+  }
+
+  .day-row:hover { border-color: #c8bfaa; }
+  .day-row.sabbath { background: #f0f5f1; }
+  .day-row.flex-day { background: #fdf9f3; }
+
+  .day-summary {
+    display: grid;
+    grid-template-columns: 80px 1fr 1fr auto;
+    gap: 0;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .day-index {
+    padding: 16px;
+    border-right: 1px solid var(--faint);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 2px;
+  }
+
+  .day-num {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 26px;
+    line-height: 1;
+  }
+
+  .day-row.sabbath .day-num { color: var(--accent2); }
+
+  .day-date { font-size: 10px; color: var(--muted); letter-spacing: .05em; }
+
+  .day-dow {
+    font-size: 10px;
+    font-weight: 500;
+    color: var(--muted);
+    letter-spacing: .05em;
+    text-transform: uppercase;
+  }
+
+  .day-row.sabbath .day-dow { color: var(--accent2); }
+
+  .day-main {
+    padding: 16px 18px;
+    border-right: 1px solid var(--faint);
+  }
+
+  .day-title {
+    font-size: 13px;
+    font-weight: 500;
+    margin-bottom: 6px;
+    line-height: 1.4;
+  }
+
+  .day-tags { display: flex; gap: 5px; flex-wrap: wrap; }
+
+  .tag {
+    font-size: 10px;
+    padding: 2px 8px;
+    border-radius: 20px;
+    letter-spacing: .02em;
+  }
+
+  .tag-blossom { background: #fce8ee; color: #8b3050; }
+  .tag-culture { background: #eeeaf8; color: #4a3a8a; }
+  .tag-anime   { background: #fdeee8; color: #7a3218; }
+  .tag-food    { background: #fdf0dc; color: #7a5018; }
+  .tag-travel  { background: #eeecea; color: #5a5550; }
+  .tag-fuji    { background: #e4eef8; color: #1e4878; }
+  .tag-nature  { background: #e6f2e8; color: #1e5028; }
+  .tag-disney  { background: #fce8f0; color: #8b2850; }
+  .tag-free    { background: #e6f2e8; color: #1e5028; }
+  .tag-kimono  { background: #eeeaf8; color: #4a3a8a; }
+  .tag-kart    { background: #fdf0dc; color: #7a4010; }
+  .tag-sabbath { background: #e2f0e8; color: #0e5030; }
+  .tag-teamlab { background: #eeeaf8; color: #4a3a8a; }
+  .tag-shop    { background: #fce8ee; color: #8b3050; }
+  .tag-night   { background: #e8e4f4; color: #2a2060; }
+  .tag-park    { background: #e6f2e8; color: #1e5028; }
+
+  .day-split {
+    padding: 16px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    justify-content: center;
+  }
+
+  .split-block {}
+  .split-label {
+    font-size: 9px;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 1px;
+  }
+
+  .split-text { font-size: 11px; color: var(--ink); line-height: 1.4; }
+  .sdivider { width: 1px; background: var(--faint); margin: 3px 0; }
+
+  .expand-toggle {
+    padding: 16px 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--muted);
+    font-size: 11px;
+    gap: 4px;
+    flex-shrink: 0;
+  }
+
+  .toggle-arrow {
+    width: 14px;
+    height: 14px;
+    border: 1px solid var(--faint);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform .25s, background .2s;
+    font-size: 9px;
+    color: var(--muted);
+  }
+
+  .day-row.open .toggle-arrow {
+    transform: rotate(180deg);
+    background: var(--ink);
+    color: white;
+    border-color: var(--ink);
+  }
+
+  /* EXPANDED PANEL */
+  .day-detail {
+    display: none;
+    border-top: 1px solid var(--faint);
+    padding: 28px 28px 28px 96px;
+    background: inherit;
+  }
+
+  .day-row.open .day-detail { display: block; }
+
+  .detail-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-bottom: 24px;
+  }
+
+  .detail-col-label {
+    font-size: 9px;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 10px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--faint);
+  }
+
+  .detail-item {
+    margin-bottom: 12px;
+  }
+
+  .detail-time {
+    font-size: 10px;
+    color: var(--muted);
+    font-weight: 500;
+    letter-spacing: .05em;
+    margin-bottom: 2px;
+  }
+
+  .detail-text {
+    font-size: 12px;
+    color: var(--ink);
+    line-height: 1.6;
+  }
+
+  .food-section {
+    background: var(--paper);
+    border-radius: 4px;
+    padding: 16px 20px;
+    margin-top: 4px;
+  }
+
+  .food-section-label {
+    font-size: 9px;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 10px;
+  }
+
+  .food-rows { display: flex; flex-direction: column; gap: 6px; }
+
+  .food-row {
+    display: flex;
+    gap: 10px;
+    font-size: 12px;
+    line-height: 1.5;
+  }
+
+  .food-who {
+    font-size: 10px;
+    font-weight: 500;
+    color: var(--muted);
+    min-width: 80px;
+    padding-top: 1px;
+  }
+
+  .food-what { color: var(--ink); }
+
+  .detail-note {
+    font-size: 11px;
+    color: var(--muted);
+    line-height: 1.65;
+    padding: 12px 16px;
+    border-left: 2px solid var(--faint);
+    margin-top: 16px;
+  }
+
+  .detail-note strong { color: var(--ink); font-weight: 500; }
+
+  /* FOOD GUIDE */
+  .food-guide-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 16px;
+  }
+
+  .food-card {
+    background: white;
+    border: 1px solid var(--faint);
+    border-radius: 4px;
+    padding: 20px;
+  }
+
+  .food-card-label {
+    font-size: 9px;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+
+  .food-card-title {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 17px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    line-height: 1.2;
+  }
+
+  .food-card-body {
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.65;
+  }
+
+  .food-card-body strong { color: var(--ink); font-weight: 500; }
+
+  /* BOOKING */
+  .booking-grid { display: flex; flex-direction: column; gap: 12px; }
+
+  .booking-card {
+    background: white;
+    border: 1px solid var(--faint);
+    border-radius: 4px;
+    padding: 18px 22px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 16px;
+    align-items: start;
+  }
+
+  .booking-name { font-weight: 500; font-size: 14px; margin-bottom: 4px; }
+
+  .booking-detail {
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.65;
+  }
+
+  .booking-detail strong { color: var(--ink); font-weight: 500; }
+
+  .booking-urgency {
+    font-size: 10px;
+    padding: 4px 10px;
+    border-radius: 20px;
+    white-space: nowrap;
+  }
+
+  .urgent { background: #fdeee8; color: var(--accent); border: 1px solid #f5c8b8; }
+  .soon   { background: #fdf0dc; color: var(--gold); border: 1px solid #ead8a8; }
+
+  /* FOOTER */
+  .footer {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 40px 40px 80px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .footer-text { font-size: 12px; color: var(--muted); }
+  .footer-jp { font-family: 'Shippori Mincho', serif; font-size: 18px; color: var(--faint); }
+
+  @media (max-width: 640px) {
+    .hero, .section, .footer { padding-left: 20px; padding-right: 20px; }
+    .day-summary { grid-template-columns: 60px 1fr auto; }
+    .day-split { display: none; }
+    .day-detail { padding-left: 20px; padding-right: 20px; }
+    .detail-grid { grid-template-columns: 1fr; }
+    .booking-card { grid-template-columns: 1fr; }
+    .hero-meta { gap: 16px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-kana">東京 · 春 · 2026</div>
+  <h1>Tokyo, <span>April.</span><br>Ten days.</h1>
+  <div class="hero-meta">
+    <div class="meta-item">
+      <span class="meta-label">Dates</span>
+      <span class="meta-value">Apr 3 – 12, 2026</span>
+    </div>
+    <div class="meta-item">
+      <span class="meta-label">Travelers</span>
+      <span class="meta-value">6 people</span>
+    </div>
+    <div class="meta-item">
+      <span class="meta-label">Base</span>
+      <span class="meta-value">Nakano, Tokyo</span>
+    </div>
+    <div class="meta-item">
+      <span class="meta-label">Arrives</span>
+      <span class="meta-value">1:35pm Friday</span>
+    </div>
+    <div class="meta-item">
+      <span class="meta-label">Sabbath</span>
+      <span class="meta-value">Apr 4 + Apr 11</span>
+    </div>
+  </div>
+  <div class="diet-list">
+    <span>×2 <strong>vegetarian</strong></span>
+    <span>×1 <strong>vegan</strong></span>
+    <span>×1 <strong>pescetarian</strong></span>
+    <span>×2 <strong>meat eaters</strong></span>
+    <span>Peak cherry blossom season</span>
+  </div>
+</div>
+
+<!-- ITINERARY -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-num">01</div>
+    <div class="section-title">Day by day — click any day to expand</div>
+  </div>
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot" style="background:#7a5898"></div>Group day</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#2a6049"></div>Sabbath / free</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#b8923a"></div>Flex / arrival</div>
+  </div>
+
+  <div class="days-grid">
+
+    <!-- DAY 1 -->
+    <div class="day-row flex-day">
+      <div class="day-summary" onclick="toggle(this)">
+        <div class="day-index">
+          <div class="day-num">1</div>
+          <div class="day-date">Apr 3</div>
+          <div class="day-dow">Fri</div>
+        </div>
+        <div class="day-main">
+          <div class="day-title">Arrival — Nakano check-in</div>
+          <div class="day-tags">
+            <span class="tag tag-travel">Transit</span>
+            <span class="tag tag-anime">Broadway?</span>
+            <span class="tag tag-food">Dinner</span>
+          </div>
+        </div>
+        <div class="day-split">
+          <div class="split-block"><div class="split-label">Afternoon</div><div class="split-text">Land 1:35pm · Nakano · check in</div></div>
+          <div class="sdivider"></div>
+          <div class="split-block"><div class="split-label">Evening</div><div class="split-text">Nakano Broadway if time · dinner</div></div>
+        </div>
+        <div class="expand-toggle"><div class="toggle-arrow">▾</div></div>
+      </div>
+      <div class="day-detail">
+        <div class="detail-grid">
+          <div>
+            <div class="detail-col-label">Schedule</div>
+            <div class="detail-item"><div class="detail-time">1:35pm</div><div class="detail-text">Land at Narita or Haneda. Allow 60–90 min for customs and baggage. Pick up Suica IC cards and SIM cards at the airport.</div></div>
+            <div class="detail-item"><div class="detail-time">~4:00pm</div><div class="detail-text">Take train to Nakano. From Narita: Narita Express to Shinjuku, transfer to Chuo Line (~80 min). From Haneda: Keikyu Line to Shinjuku, Chuo Line (~50 min). Check in and drop bags.</div></div>
+            <div class="detail-item"><div class="detail-time">~5:00pm</div><div class="detail-text">Nakano Broadway is a 5-min walk from the station. Sundown ~6:15pm — tight but doable for a quick first walk-through for the Sabbath observers. Non-observers can stay longer.</div></div>
+            <div class="detail-item"><div class="detail-time">~7:00pm</div><div class="detail-text">Dinner along Nakano Sun Mall shotengai — the covered shopping street has izakayas, ramen, and casual spots a short walk from home base.</div></div>
+          </div>
+          <div>
+            <div class="detail-col-label">Notes</div>
+            <div class="detail-item"><div class="detail-text">Keep Day 1 extremely low-key. Jet lag from New York to Tokyo (~14 hr time difference) hits hard. The goal is to land, orient, eat something real, and sleep at a reasonable hour so Day 2 isn't ruined.</div></div>
+            <div class="detail-item"><div class="detail-text">Nakano Broadway closes ~8pm. If the group is too tired, skip it entirely — it's here all week.</div></div>
+          </div>
+        </div>
+        <div class="food-section">
+          <div class="food-section-label">Dinner suggestions by diet</div>
+          <div class="food-rows">
+            <div class="food-row"><div class="food-who">Vegan</div><div class="food-what">Vegetable ramen (ask for vegan broth — some Nakano spots offer it), or inari sushi from the konbini</div></div>
+            <div class="food-row"><div class="food-who">Vegetarian</div><div class="food-what">Agedashi tofu, vegetable tempura, tamago (egg) nigiri, kitsune udon (sweet tofu broth — check dashi)</div></div>
+            <div class="food-row"><div class="food-who">Pescetarian</div><div class="food-what">Sashimi set, salmon onigiri, kaiten-zushi conveyor belt sushi nearby</div></div>
+            <div class="food-row"><div class="food-who">Meat eaters</div><div class="food-what">Yakitori skewers at the izakaya, tonkotsu ramen, karaage chicken</div></div>
+          </div>
+        </div>
+        <div class="detail-note"><strong>Konbini tip:</strong> Stop at 7-Eleven on the way back for breakfast supplies — onigiri, melon bread, canned coffee. Stock the room tonight so morning is easy.</div>
+      </div>
+    </div>
+
+    <!-- DAY 2 -->
+    <div class="day-row sabbath">
+      <div class="day-summary" onclick="toggle(this)">
+        <div class="day-index">
+          <div class="day-num">2</div>
+          <div class="day-date">Apr 4</div>
+          <div class="day-dow">Shabbat</div>
+        </div>
+        <div class="day-main">
+          <div class="day-title">Sabbath — kimono · Ueno · Asakusa</div>
+          <div class="day-tags">
+            <span class="tag tag-sabbath">Sabbath</span>
+            <span class="tag tag-kimono">Kimono</span>
+            <span class="tag tag-blossom">Blossoms</span>
+            <span class="tag tag-culture">Senso-ji</span>
+          </div>
+        </div>
+        <div class="day-split">
+          <div class="split-block"><div class="split-label">Morning</div><div class="split-text">Ueno Park hanami in kimono</div></div>
+          <div class="sdivider"></div>
+          <div class="split-block"><div class="split-label">Afternoon</div><div class="split-text">Asakusa stroll · Senso-ji · Nakamise</div></div>
+        </div>
+        <div class="expand-toggle"><div class="toggle-arrow">▾</div></div>
+      </div>
+      <div class="day-detail">
+        <div class="detail-grid">
+          <div>
+            <div class="detail-col-label">Schedule</div>
+            <div class="detail-item"><div class="detail-time">7:30am</div><div class="detail-text">Head to Ueno Park early to claim a good spot under the main blossom avenue before crowds arrive. Bring a tarp (buy at Daiso the night before for ¥110).</div></div>
+            <div class="detail-item"><div class="detail-time">8:00am</div><div class="detail-text">Hanami picnic under the cherry blossoms. Kimonos were rented and paid for in advance — wear them here for the full effect. Best morning light for photos 7–9am.</div></div>
+            <div class="detail-item"><div class="detail-time">10:30am</div><div class="detail-text">Walk Shinobazu Pond — blossom reflections in the water. Bentendo Temple sits on the island in the middle. Free to enter.</div></div>
+            <div class="detail-item"><div class="detail-time">12:00pm</div><div class="detail-text">Take the Ginza Line from Ueno to Asakusa (2 stops, ~5 min). Lunch near Nakamise-dori before the afternoon stroll.</div></div>
+            <div class="detail-item"><div class="detail-time">1:30pm</div><div class="detail-text">Kaminarimon Gate (Thunder Gate) — the iconic red lantern photo. Walk the full Nakamise arcade in kimono. Through to Senso-ji main hall, incense burner, Hozomon inner gate.</div></div>
+            <div class="detail-item"><div class="detail-time">3:30pm</div><div class="detail-text">Asakusa Jinja shrine next door — quieter, beautiful stone lanterns and torii. Then Azumabashi bridge for the Skytree skyline shot.</div></div>
+          </div>
+          <div>
+            <div class="detail-col-label">Sabbath notes</div>
+            <div class="detail-item"><div class="detail-text">Kimono rental is paid for in advance — no transactions on the day. Everything on this day is free: Ueno Park (free), Senso-ji (free), Nakamise window shopping only. IC card tap for the Ginza Line is the only spend, which may be handled by a non-observer.</div></div>
+            <div class="detail-item"><div class="detail-text">Best photo spots in order: Kaminarimon gate → Nakamise alley → Hozomon inner gate → main hall forecourt → Asakusa Jinja → Azumabashi bridge.</div></div>
+          </div>
+        </div>
+        <div class="food-section">
+          <div class="food-section-label">Food on the day</div>
+          <div class="food-rows">
+            <div class="food-row"><div class="food-who">Picnic (all)</div><div class="food-what">Prep the night before from konbini: onigiri (kombu or pickled plum = vegan), edamame, inari sushi, tamagoyaki for veg, karaage for meat eaters</div></div>
+            <div class="food-row"><div class="food-who">Lunch (vegan)</div><div class="food-what">Itosho near Senso-ji does kaiseki-style tofu cuisine — fully plant-forward and stunning</div></div>
+            <div class="food-row"><div class="food-who">Lunch (veg)</div><div class="food-what">Vegetable tempura sets, kitsune udon (ask about dashi), tamago sushi</div></div>
+            <div class="food-row"><div class="food-who">Lunch (pesc)</div><div class="food-what">Sushi or sashimi set near Nakamise — many small sushi restaurants within a short walk</div></div>
+            <div class="food-row"><div class="food-who">Lunch (meat)</div><div class="food-what">Tempura set with ebi (prawn) and chicken, gyudon beef bowl, yakitori near Hoppy Street</div></div>
+          </div>
+        </div>
+        <div class="detail-note"><strong>Reminder:</strong> Kimonos must be booked and fully paid before sundown Apr 3. Most Asakusa rental shops (Wargo, Asakusa Sakura) allow you to pre-book by email or online — coordinate with the shop to arrange pickup/wearing at Ueno rather than their Asakusa location if possible, or wear from Asakusa and walk to Ueno after lunch.</div>
+      </div>
+    </div>
+
+    <!-- DAY 3 -->
+    <div class="day-row">
+      <div class="day-summary" onclick="toggle(this)">
+        <div class="day-index">
+          <div class="day-num">3</div>
+          <div class="day-date">Apr 5</div>
+          <div class="day-dow">Sun</div>
+        </div>
+        <div class="day-main">
+          <div class="day-title">teamLab Planets · Toyosu waterfront</div>
+          <div class="day-tags">
+            <span class="tag tag-teamlab">teamLab</span>
+            <span class="tag tag-food">Toyosu market</span>
+            <span class="tag tag-nature">Waterfront</span>
+          </div>
+        </div>
+        <div class="day-split">
+          <div class="split-block"><div class="split-label">Morning</div><div class="split-text">teamLab Planets · cherry blossom mode</div></div>
+          <div class="sdivider"></div>
+          <div class="split-block"><div class="split-label">Afternoon</div><div class="split-text">Toyosu market lunch · waterfront walk</div></div>
+        </div>
+        <div class="expand-toggle"><div class="toggle-arrow">▾</div></div>
+      </div>
+      <div class="day-detail">
+        <div class="detail-grid">
+          <div>
+            <div class="detail-col-label">Schedule</div>
+            <div class="detail-item"><div class="detail-time">9:00am</div><div class="detail-text">Breakfast in Nakano before heading out — eat before you go, the café inside teamLab is pricey.</div></div>
+            <div class="detail-item"><div class="detail-time">10:00am</div><div class="detail-text">Arrive at teamLab Planets Toyosu for your booked entry slot. Store shoes and bags in the free lockers. Bring only your phone in a zip-lock bag — the water room has shin-deep water. Wear pants/shorts that roll up above the knee. No skirts or dresses (mirrored floors).</div></div>
+            <div class="detail-item"><div class="detail-time">10:00am–12:30pm</div><div class="detail-text">Inside: 10+ immersive installations in cherry blossom mode. Highlights — koi turning to sakura in the water room, "Floating in the Falling Universe of Flowers" with raining digital blossoms, Infinite Crystal Universe (deep space LEDs), Floating Flower Garden (13,000 live orchids that part around you).</div></div>
+            <div class="detail-item"><div class="detail-time">1:00pm</div><div class="detail-text">10-min walk to Toyosu Fish Market outer market for lunch. Fresh sushi, sashimi, donburi, and seafood bowls right at the source.</div></div>
+            <div class="detail-item"><div class="detail-time">2:30pm</div><div class="detail-text">Waterfront walk along the Toyosu pier — views back toward Rainbow Bridge and the bay. Optional: hop the Yurikamome one stop to Odaiba for the afternoon.</div></div>
+          </div>
+          <div>
+            <div class="detail-col-label">teamLab logistics</div>
+            <div class="detail-item"><div class="detail-text">Tickets are date/time specific and non-refundable. Book at teamlabplanets.dmm.com or Klook for 6 people in the same slot. April Sunday rate ~¥4,600 pp = ~¥27,600 total. Book the earliest available slot.</div></div>
+            <div class="detail-item"><div class="detail-text">Split into pairs for photos inside the mirror rooms — smaller groups photograph better. Reunite in the flower garden for the full group lying-down shot under the digital sakura.</div></div>
+          </div>
+        </div>
+        <div class="food-section">
+          <div class="food-section-label">Lunch at Toyosu Market</div>
+          <div class="food-rows">
+            <div class="food-row"><div class="food-who">Vegan</div><div class="food-what">Limited options at the fish market — best to grab vegetable temaki or a rice bowl with pickled veg. Or eat before at a Nakano café and browse the market without eating</div></div>
+            <div class="food-row"><div class="food-who">Vegetarian</div><div class="food-what">Tamagoyaki (egg roll) stalls, vegetable tempura, tamago nigiri sets</div></div>
+            <div class="food-row"><div class="food-who">Pescetarian</div><div class="food-what">Peak experience — fresh uni (sea urchin), otoro tuna, salmon sashimi bowls, oysters. This is the day for the pescetarian in the group</div></div>
+            <div class="food-row"><div class="food-who">Meat eaters</div><div class="food-what">Wagyu beef skewers are available at some outer market stalls alongside the seafood options</div></div>
+          </div>
+        </div>
+        <div class="detail-note"><strong>Note:</strong> teamLab Planets tickets must be booked well in advance. April Sundays sell out weeks ahead. This is the highest-priority booking after Disney.</div>
+      </div>
+    </div>
+
+    <!-- DAY 4 -->
+    <div class="day-row">
+      <div class="day-summary" onclick="toggle(this)">
+        <div class="day-index">
+          <div class="day-num">4</div>
+          <div class="day-date">Apr 6</div>
+          <div class="day-dow">Mon</div>
+        </div>
+        <div class="day-main">
+          <div class="day-title">Group shopping — Harajuku · Omotesando · Shibuya</div>
+          <div class="day-tags">
+            <span class="tag tag-shop">Shopping</span>
+            <span class="tag tag-anime">Harajuku</span>
+            <span class="tag tag-free">Free day</span>
+            <span class="tag tag-culture">Meiji Shrine</span>
+          </div>
+        </div>
+        <div class="day-split">
+          <div class="split-block"><div class="split-label">Morning</div><div class="split-text">Harajuku · Takeshita St · Meiji Shrine</div></div>
+          <div class="sdivider"></div>
+          <div class="split-block"><div class="split-label">Afternoon</div><div class="split-text">Omotesando · Shibuya 109 · dinner</div></div>
+        </div>
+        <div class="expand-toggle"><div class="toggle-arrow">▾</div></div>
+      </div>
+      <div class="day-detail">
+        <div class="detail-grid">
+          <div>
+            <div class="detail-col-label">Schedule</div>
+            <div class="detail-item"><div class="detail-time">9:30am</div><div class="detail-text">Meiji Shrine — a 10-min walk from Harajuku station. Forested path, massive torii gate, peaceful despite being in central Tokyo. Free entry. Budget 45 min.</div></div>
+            <div class="detail-item"><div class="detail-time">11:00am</div><div class="detail-text">Takeshita Street — 400m of Harajuku chaos. Crepe stalls, gothic lolita fashion, streetwear, cheap accessories. The vibe is intentionally maximalist and loud. Great for unique pieces under ¥3,000.</div></div>
+            <div class="detail-item"><div class="detail-time">1:00pm</div><div class="detail-text">Lunch in Harajuku or early Omotesando. The area has everything from conveyor sushi to French bakeries.</div></div>
+            <div class="detail-item"><div class="detail-time">2:00pm</div><div class="detail-text">Omotesando — the designer strip. Comme des Garçons, Issey Miyake, Supreme Tokyo, local concept stores. Even if you don't buy, the architecture (Herzog & de Meuron Prada building) is worth seeing.</div></div>
+            <div class="detail-item"><div class="detail-time">4:00pm</div><div class="detail-text">Shibuya — head down to Shibuya 109 for J-fashion and streetwear. Then the famous Scramble Crossing. Starbucks above the crossing has views but queues — Mag's Park nearby is quieter with the same angle.</div></div>
+            <div class="detail-item"><div class="detail-time">7:00pm</div><div class="detail-text">Dinner in Shibuya or nearby Daikanyama — a quieter, more intimate neighbourhood 10 min walk from Shibuya with excellent restaurant options.</div></div>
+          </div>
+          <div>
+            <div class="detail-col-label">Shopping by interest</div>
+            <div class="detail-item"><div class="detail-text"><strong>Anime / streetwear:</strong> Takeshita Street, Shibuya 109, Cat Street between Harajuku and Omotesando</div></div>
+            <div class="detail-item"><div class="detail-text"><strong>Designer / luxury:</strong> Omotesando Hills, the main Omotesando strip</div></div>
+            <div class="detail-item"><div class="detail-text"><strong>Vintage:</strong> Cat Street and the backstreets around Harajuku have excellent vintage shops</div></div>
+            <div class="detail-item"><div class="detail-text"><strong>Souvenirs:</strong> Save this for the last few days — carrying shopping bags all trip is painful</div></div>
+          </div>
+        </div>
+        <div class="food-section">
+          <div class="food-section-label">Food options along the route</div>
+          <div class="food-rows">
+            <div class="food-row"><div class="food-who">Vegan</div><div class="food-what">AIN SOPH Journey in Shinjuku (10 min away) is a fully vegan Japanese restaurant — worth a detour for dinner. Lunch: Harajuku has several vegan-labeled cafés</div></div>
+            <div class="food-row"><div class="food-who">Vegetarian</div><div class="food-what">Harajuku crepes (custard, fruit, matcha varieties are veg-friendly), Omotesando café lunch sets</div></div>
+            <div class="food-row"><div class="food-who">Pescetarian</div><div class="food-what">Sushi Saito area near Omotesando, or conveyor belt sushi in Shibuya for a quick affordable lunch</div></div>
+            <div class="food-row"><div class="food-who">Meat eaters</div><div class="food-what">Ichiran Ramen Shibuya (solo booth ramen experience), yakiniku around Shibuya for dinner</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DAY 5 -->
+    <div class="day-row">
+      <div class="day-summary" onclick="toggle(this)">
+        <div class="day-index">
+          <div class="day-num">5</div>
+          <div class="day-date">Apr 7</div>
+          <div class="day-dow">Tue</div>
+        </div>
+        <div class="day-main">
+          <div class="day-title">Karting · Shibuya · night out</div>
+          <div class="day-tags">
+            <span class="tag tag-kart">Street kart</span>
+            <span class="tag tag-kart">JDM</span>
+            <span class="tag tag-culture">Shibuya</span>
+            <span class="tag tag-night">Night out</span>
+          </div>
+        </div>
+        <div class="day-split">
+          <div class="split-block"><div class="split-label">Morning</div><div class="split-text">Mario Kart racing OR JDM drift</div></div>
+          <div class="sdivider"></div>
+          <div class="split-block"><div class="split-label">Afternoon / night</div><div class="split-text">Shibuya Scramble · night out</div></div>
+        </div>
+        <div class="expand-toggle"><div class="toggle-arrow">▾</div></div>
+      </div>
+      <div class="day-detail">
+        <div class="detail-grid">
+          <div>
+            <div class="detail-col-label">Schedule</div>
+            <div class="detail-item"><div class="detail-time">9:00am</div><div class="detail-text">Meet at the karting operator — most tours depart from Shinjuku or Akihabara area. Full gear provided: helmet, driving gloves, costume if doing street kart. Tours run 2–3 hours including briefing.</div></div>
+            <div class="detail-item"><div class="detail-time">9:00am–12:00pm</div><div class="detail-text">Street karting route through central Tokyo (Shibuya, Akihabara, Ginza depending on operator) OR JDM drift experience at an indoor/outdoor circuit — passengers ride along in a drift car with a professional driver.</div></div>
+            <div class="detail-item"><div class="detail-time">1:00pm</div><div class="detail-text">Lunch near Shibuya — the group will probably be buzzing. Casual ramen or gyudon to refuel.</div></div>
+            <div class="detail-item"><div class="detail-time">3:00pm</div><div class="detail-text">Shibuya afternoon — Scramble Crossing, Tower Records (still alive and enormous), Shibuya Sky observation deck if anyone wants a daytime aerial view (¥2,000 pp, worth it).</div></div>
+            <div class="detail-item"><div class="detail-time">7:00pm onwards</div><div class="detail-text">Night out — Shibuya or Shinjuku. Golden Gai in Shinjuku (200 tiny bars, split into pairs), Omoide Yokocho (smoky yakitori alley), or stay in Shibuya for the club/bar strip around Dogenzaka.</div></div>
+          </div>
+          <div>
+            <div class="detail-col-label">Karting options</div>
+            <div class="detail-item"><div class="detail-text"><strong>Street karting:</strong> Check Klook or Viator for current operators — the original Maricar has rebranded. Look for tours that include a guide car, costumes, and a photo package. ~¥6,000–9,000 pp.</div></div>
+            <div class="detail-item"><div class="detail-text"><strong>JDM drift:</strong> Ebisu Circuit is the legendary option but it's a day trip. For Tokyo-area drift, look for "drift taxi" experiences where a pro driver takes you as passenger. ~¥10,000–15,000 pp.</div></div>
+            <div class="detail-item"><div class="detail-text"><strong>International license:</strong> Street karting requires a valid driver's license. Confirm all 6 have one before booking.</div></div>
+          </div>
+        </div>
+        <div class="food-section">
+          <div class="food-section-label">Dinner / night out food</div>
+          <div class="food-rows">
+            <div class="food-row"><div class="food-who">All diets</div><div class="food-what">Izakaya in Shinjuku or Shibuya — best single choice for a mixed group night out. Order shared small plates, everyone picks what works for them</div></div>
+            <div class="food-row"><div class="food-who">Vegan</div><div class="food-what">T's TanTan in Shibuya serves fully vegan ramen and gyoza — excellent and filling before a night out</div></div>
+            <div class="food-row"><div class="food-who">Late night (all)</div><div class="food-what">Yoshinoya or Sukiya gyudon chains are open 24hr and have vegetable options — perfect 2am food</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DAY 6 -->
+    <div class="day-row">
+      <div class="day-summary" onclick="toggle(this)">
+        <div class="day-index">
+          <div class="day-num">6</div>
+          <div class="day-date">Apr 8</div>
+          <div class="day-dow">Wed</div>
+        </div>
+        <div class="day-main">
+          <div class="day-title">Tokyo Disneyland — all day</div>
+          <div class="day-tags">
+            <span class="tag tag-disney">Disney</span>
+          </div>
+        </div>
+        <div class="day-split">
+          <div class="split-block"><div class="split-label">Morning</div><div class="split-text">Early entry · Fantasyland · Tomorrowland</div></div>
+          <div class="sdivider"></div>
+          <div class="split-block"><div class="split-label">Evening</div><div class="split-text">Parades · night shows · late dinner</div></div>
+        </div>
+        <div class="expand-toggle"><div class="toggle-arrow">▾</div></div>
+      </div>
+      <div class="day-detail">
+        <div class="detail-grid">
+          <div>
+            <div class="detail-col-label">Schedule</div>
+            <div class="detail-item"><div class="detail-time">7:30am</div><div class="detail-text">Leave Nakano early — Disneyland is in Urayasu (Chiba), about 45 min by train. Take the JR Chuo Line to Tokyo Station, then the JR Keiyō Line to Maihama Station. Be at the gate by rope drop (8am).</div></div>
+            <div class="detail-item"><div class="detail-time">8:00am</div><div class="detail-text">Rope drop — go straight to the most popular rides first before queues build. Pooh's Hunny Hunt, Haunted Mansion, Space Mountain. Use the Tokyo Disney Resort app for real-time wait times and mobile food ordering.</div></div>
+            <div class="detail-item"><div class="detail-time">12:00pm</div><div class="detail-text">Lunch — pre-order via the app to skip food queues. April is busy; walk-up waits at restaurants can be 40+ min.</div></div>
+            <div class="detail-item"><div class="detail-time">3:00pm</div><div class="detail-text">Afternoon parade — Dreaming Up! runs daily. Find a spot on the route 30 min early. One of the best Disney parades in the world.</div></div>
+            <div class="detail-item"><div class="detail-time">Evening</div><div class="detail-text">Stay for the night show and electrical parade if energy allows. Park closes 9–10pm in April. Late dinner at the park or back near Nakano.</div></div>
+          </div>
+          <div>
+            <div class="detail-col-label">Tips for 6</div>
+            <div class="detail-item"><div class="detail-text">Buy tickets in advance at tokyodisneyresort.jp. Adult 1-day pass ~¥9,400 pp = ~¥56,400 for the group. April is cherry blossom season — the park is decorated and extra crowded.</div></div>
+            <div class="detail-item"><div class="detail-text">Download the Tokyo Disney Resort app before the trip. Standby Plus (paid queue skip) is available for the most popular attractions — worth it for a group.</div></div>
+            <div class="detail-item"><div class="detail-text">Wear comfortable shoes. This is a 12–14 hour walking day. Pack a small bag with snacks, portable charger, and a light layer for the evening.</div></div>
+          </div>
+        </div>
+        <div class="food-section">
+          <div class="food-section-label">Food at Disneyland</div>
+          <div class="food-rows">
+            <div class="food-row"><div class="food-who">Vegan</div><div class="food-what">Tokyo Disneyland has a dedicated allergy/dietary request counter near the park entrance — visit first thing to get a list of vegan-safe options at each restaurant for that day</div></div>
+            <div class="food-row"><div class="food-who">Vegetarian</div><div class="food-what">Plaza Pavilion Restaurant has vegetable curry. Eastside Café has pasta options. The allergy counter can confirm what's safe each day</div></div>
+            <div class="food-row"><div class="food-who">Pescetarian</div><div class="food-what">Shrimp and seafood options at several restaurants — Magellan's (table service) has a reliable pescetarian-friendly menu</div></div>
+            <div class="food-row"><div class="food-who">Meat eaters</div><div class="food-what">Turkey legs near the castle, burgers at Tomorrowland Terrace, smoked chicken at Hungry Bear Restaurant</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DAY 7 -->
+    <div class="day-row flex-day">
+      <div class="day-summary" onclick="toggle(this)">
+        <div class="day-index">
+          <div class="day-num">7</div>
+          <div class="day-date">Apr 9</div>
+          <div class="day-dow">Thu</div>
+        </div>
+        <div class="day-main">
+          <div class="day-title">Gap day — free day 1</div>
+          <div class="day-tags">
+            <span class="tag tag-free">Free day 1</span>
+          </div>
+        </div>
+        <div class="day-split">
+          <div class="split-block"><div class="split-label">Morning</div><div class="split-text">Slow start · rest after Disney</div></div>
+          <div class="sdivider"></div>
+          <div class="split-block"><div class="split-label">Afternoon</div><div class="split-text">Free — solo or small groups</div></div>
+        </div>
+        <div class="expand-toggle"><div class="toggle-arrow">▾</div></div>
+      </div>
+      <div class="day-detail">
+        <div class="detail-grid">
+          <div>
+            <div class="detail-col-label">Ideas — solo or pairs</div>
+            <div class="detail-item"><div class="detail-text"><strong>Shimokitazawa</strong> — bohemian neighbourhood 10 min from Nakano. Vintage clothing, independent record shops, live music venues, low-key cafés. Best browsed slowly with no agenda.</div></div>
+            <div class="detail-item"><div class="detail-text"><strong>Yanaka</strong> — old Tokyo neighbourhood that survived the war. Narrow streets, family-run shops, cats, a historic cemetery lined with cherry trees. Very quiet and atmospheric.</div></div>
+            <div class="detail-item"><div class="detail-text"><strong>Shinjuku Gyoen</strong> — one of Tokyo's best parks, ¥500 entry. Peak cherry blossoms may still be going. Large enough to sit and read for hours.</div></div>
+            <div class="detail-item"><div class="detail-text"><strong>Koenji</strong> — neighbourhood adjacent to Nakano. Alternative culture, vintage stores, good ramen, no tourists. Worth an afternoon wander.</div></div>
+            <div class="detail-item"><div class="detail-text"><strong>Tokyo National Museum</strong> — Ueno. World's largest collection of Japanese art. Full day if interested.</div></div>
+          </div>
+          <div>
+            <div class="detail-col-label">Recovery notes</div>
+            <div class="detail-item"><div class="detail-text">Disney is exhausting. Fuji is tomorrow — a long, early day. This free day should be genuinely restful. Sleep in, eat somewhere good near Nakano for lunch, and do one low-key neighbourhood wander at most.</div></div>
+            <div class="detail-item"><div class="detail-text">Good day for anyone who wants to do Nakano Broadway properly — or to revisit anything from earlier in the trip.</div></div>
+          </div>
+        </div>
+        <div class="food-section">
+          <div class="food-section-label">Good food near Nakano on a slow day</div>
+          <div class="food-rows">
+            <div class="food-row"><div class="food-who">All diets</div><div class="food-what">Nakano Sun Mall has a mix of everything — ramen, soba, curry, conveyor sushi. Good for a casual group lunch without committing to a neighbourhood</div></div>
+            <div class="food-row"><div class="food-who">Vegan / veg</div><div class="food-what">Shimokitazawa has several vegetarian-friendly cafés if you head that way — Herald Café and  Munch are popular local spots</div></div>
+            <div class="food-row"><div class="food-who">Meat / pesc</div><div class="food-what">Koenji has excellent yakitori alley spots and a strong ramen scene — worth the 5-min train ride</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DAY 8 -->
+    <div class="day-row">
+      <div class="day-summary" onclick="toggle(this)">
+        <div class="day-index">
+          <div class="day-num">8</div>
+          <div class="day-date">Apr 10</div>
+          <div class="day-dow">Fri</div>
+        </div>
+        <div class="day-main">
+          <div class="day-title">Mt. Fuji day trip — all day</div>
+          <div class="day-tags">
+            <span class="tag tag-fuji">Mt. Fuji</span>
+            <span class="tag tag-nature">Nature</span>
+            <span class="tag tag-blossom">Blossoms</span>
+            <span class="tag tag-travel">Day trip</span>
+          </div>
+        </div>
+        <div class="day-split">
+          <div class="split-block"><div class="split-label">Morning</div><div class="split-text">Bus departs ~8am · Kawaguchiko</div></div>
+          <div class="sdivider"></div>
+          <div class="split-block"><div class="split-label">Afternoon</div><div class="split-text">Lake walk · blossoms · return ~6pm</div></div>
+        </div>
+        <div class="expand-toggle"><div class="toggle-arrow">▾</div></div>
+      </div>
+      <div class="day-detail">
+        <div class="detail-grid">
+          <div>
+            <div class="detail-col-label">Schedule</div>
+            <div class="detail-item"><div class="detail-time">7:00am</div><div class="detail-text">Early breakfast and pack a bag — layers, sunscreen, snacks, water. It's colder near Fuji even in April (~5–10°C at the 5th Station if you go up).</div></div>
+            <div class="detail-item"><div class="detail-time">8:00am</div><div class="detail-text">Bus departs from Shinjuku (most operators use Shinjuku Bus Terminal). Journey to Kawaguchiko is ~2 hours.</div></div>
+            <div class="detail-item"><div class="detail-time">10:00am</div><div class="detail-text">Arrive at Lake Kawaguchi. In early April, Kawaguchiko cherry blossoms are often still at or near peak — with Fuji as a backdrop this is one of Japan's most photographed scenes. Walk the north shore of the lake for the best Fuji reflection shots.</div></div>
+            <div class="detail-item"><div class="detail-time">12:00pm</div><div class="detail-text">Lunch at a lakeside restaurant or the tour operator's included stop. Hoto noodle soup (thick flat noodles in miso broth with vegetables) is the regional specialty.</div></div>
+            <div class="detail-item"><div class="detail-time">1:30pm</div><div class="detail-text">Fuji 5th Station (if included in tour, ~2,300m elevation) — views from above the clouds on clear days. Or Oshino Hakkai, a village of 8 sacred spring ponds fed by Fuji snowmelt.</div></div>
+            <div class="detail-item"><div class="detail-time">~6:00pm</div><div class="detail-text">Return to Shinjuku. Important: Apr 10 is Friday — confirm bus returns before sundown (~6:20pm Tokyo). Check this before booking.</div></div>
+          </div>
+          <div>
+            <div class="detail-col-label">Booking notes</div>
+            <div class="detail-item"><div class="detail-text">Recommended operators: Klook, Viator, or Hato Bus. Look for tours departing 7:30–8am and returning by 6pm. Cost ~¥8,000–12,000 pp. Confirm the return time explicitly before booking given the Friday Sabbath constraint.</div></div>
+            <div class="detail-item"><div class="detail-text">Mt. Fuji itself is not climbable in April — the official climbing season opens July 1. The day trip is about the views, the lake, and the surrounding area.</div></div>
+          </div>
+        </div>
+        <div class="food-section">
+          <div class="food-section-label">Food on the day</div>
+          <div class="food-rows">
+            <div class="food-row"><div class="food-who">All diets</div><div class="food-what">Hoto noodles — the regional dish. Vegetarian-friendly versions exist (vegetable miso broth). Ask the restaurant or confirm with the tour operator in advance</div></div>
+            <div class="food-row"><div class="food-who">Vegan</div><div class="food-what">Pack snacks from Nakano konbini — rural Yamanashi prefecture has limited vegan-specific options. Inari sushi, onigiri (kombu filling), and fruit are safe portable options</div></div>
+            <div class="food-row"><div class="food-who">Meat / pesc</div><div class="food-what">Grilled river fish (ayu) is a local Fujiyoshida specialty available at lakeside restaurants in spring</div></div>
+          </div>
+        </div>
+        <div class="detail-note"><strong>Critical note:</strong> This day is a Friday. Sabbath starts at ~6:20pm in Tokyo on April 10. Verify the bus returns to Shinjuku by 6pm before confirming the booking. Most standard day tours do return in time, but confirm explicitly.</div>
+      </div>
+    </div>
+
+    <!-- DAY 9 -->
+    <div class="day-row sabbath">
+      <div class="day-summary" onclick="toggle(this)">
+        <div class="day-index">
+          <div class="day-num">9</div>
+          <div class="day-date">Apr 11</div>
+          <div class="day-dow">Shabbat</div>
+        </div>
+        <div class="day-main">
+          <div class="day-title">Sabbath · Akihabara for others</div>
+          <div class="day-tags">
+            <span class="tag tag-sabbath">Sabbath</span>
+            <span class="tag tag-park">Gardens</span>
+            <span class="tag tag-anime">Akihabara</span>
+          </div>
+        </div>
+        <div class="day-split">
+          <div class="split-block"><div class="split-label">Sabbath observers</div><div class="split-text">Shinjuku Gyoen · slow walk</div></div>
+          <div class="sdivider"></div>
+          <div class="split-block"><div class="split-label">Others</div><div class="split-text">Akihabara · arcades · anime</div></div>
+        </div>
+        <div class="expand-toggle"><div class="toggle-arrow">▾</div></div>
+      </div>
+      <div class="day-detail">
+        <div class="detail-grid">
+          <div>
+            <div class="detail-col-label">Sabbath observers</div>
+            <div class="detail-item"><div class="detail-time">Morning</div><div class="detail-text">Slow start after the Fuji day. Walk to Shinjuku Gyoen (¥500, one of Tokyo's finest gardens) — late cherry blossoms may still be blooming. The park is large enough to spend a full morning sitting, walking, and unwinding.</div></div>
+            <div class="detail-item"><div class="detail-time">Afternoon</div><div class="detail-text">Yoyogi Park (free) — large open lawns, always interesting people-watching on Saturdays. Meiji Shrine is adjacent for a peaceful walk through the forested path.</div></div>
+            <div class="detail-item"><div class="detail-time">Evening</div><div class="detail-text">Regroup with the full group after Sabbath ends (~7:30pm) for a final Saturday night dinner together.</div></div>
+          </div>
+          <div>
+            <div class="detail-col-label">Others — Akihabara</div>
+            <div class="detail-item"><div class="detail-time">Morning</div><div class="detail-text">Sleep in — last night of serious activity. Head to Akihabara late morning.</div></div>
+            <div class="detail-item"><div class="detail-time">11:00am–5:00pm</div><div class="detail-text">Akihabara deep dive: Yodobashi Camera (8-floor electronics megastore), Super Potato (retro game shop), Kotobukiya (figures and collectibles), Mandarake (used manga and anime goods), the multi-floor arcade buildings. This is best done without a strict agenda — just wander upward through the floors.</div></div>
+            <div class="detail-item"><div class="detail-time">Evening</div><div class="detail-text">Regroup with the Sabbath observers for a final group dinner.</div></div>
+          </div>
+        </div>
+        <div class="food-section">
+          <div class="food-section-label">Final group dinner — Shinjuku or Nakano</div>
+          <div class="food-rows">
+            <div class="food-row"><div class="food-who">All diets</div><div class="food-what">A proper izakaya send-off — order everything: yakitori, agedashi tofu, edamame, sashimi, karaage. Last chance for Japanese food, make it count</div></div>
+            <div class="food-row"><div class="food-who">Vegan / veg</div><div class="food-what">Ask the izakaya for their "yasai" (vegetable) skewers and confirm no dashi in the tofu broth — most good izakayas can accommodate</div></div>
+            <div class="food-row"><div class="food-who">Last night splurge</div><div class="food-what">Consider a wagyu yakiniku restaurant for the group — everyone grills at the table, highly social, and veg/vegan guests can order vegetables and mushrooms on the grill</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DAY 10 -->
+    <div class="day-row flex-day">
+      <div class="day-summary" onclick="toggle(this)">
+        <div class="day-index">
+          <div class="day-num">10</div>
+          <div class="day-date">Apr 12</div>
+          <div class="day-dow">Sun</div>
+        </div>
+        <div class="day-main">
+          <div class="day-title">Departure morning</div>
+          <div class="day-tags">
+            <span class="tag tag-food">Tsukiji</span>
+            <span class="tag tag-travel">Depart</span>
+          </div>
+        </div>
+        <div class="day-split">
+          <div class="split-block"><div class="split-label">Morning</div><div class="split-text">Tsukiji breakfast · konbini run · pack</div></div>
+          <div class="sdivider"></div>
+          <div class="split-block"><div class="split-label">Midday</div><div class="split-text">Airport transfer · depart Tokyo</div></div>
+        </div>
+        <div class="expand-toggle"><div class="toggle-arrow">▾</div></div>
+      </div>
+      <div class="day-detail">
+        <div class="detail-grid">
+          <div>
+            <div class="detail-col-label">Schedule</div>
+            <div class="detail-item"><div class="detail-time">7:00am</div><div class="detail-text">Final konbini run — stock up on omiyage (souvenir snacks) for the flight. Kit Kat matcha, Pocky, regional wagashi. Last chance.</div></div>
+            <div class="detail-item"><div class="detail-time">8:00am</div><div class="detail-text">Tsukiji Outer Market for breakfast — the inner market moved to Toyosu but the outer market remains. Tamagoyaki (egg roll) fresh off the grill, sushi for breakfast, fruit on skewers. Budget 1.5 hours.</div></div>
+            <div class="detail-item"><div class="detail-time">10:00am</div><div class="detail-text">Return to Nakano to collect bags. Check out of accommodation.</div></div>
+            <div class="detail-item"><div class="detail-time">11:00am</div><div class="detail-text">Airport transfer. From Nakano: Chuo Line to Shinjuku, Narita Express to Narita (~85 min, ¥3,070). For Haneda: Chuo Line to Shinjuku, Keio Line to Haneda (~40 min). Allow 3 hours before international departure.</div></div>
+          </div>
+          <div>
+            <div class="detail-col-label">Final notes</div>
+            <div class="detail-item"><div class="detail-text">Tsukiji is a 25-min train ride from Nakano — take the Marunouchi Line from Nakano-Sakaue to Tsukiji (4 stops). Leave bags at the accommodation during breakfast, collect on the way to the airport.</div></div>
+            <div class="detail-item"><div class="detail-text">The airport has IC card refund machines at most terminals — cash out remaining Suica balances before departure (minus the ¥500 deposit which is refunded separately).</div></div>
+          </div>
+        </div>
+        <div class="food-section">
+          <div class="food-section-label">Tsukiji breakfast by diet</div>
+          <div class="food-rows">
+            <div class="food-row"><div class="food-who">Vegan</div><div class="food-what">Tsukiji is seafood-heavy — best picks: fresh fruit stalls, tamagoyaki is egg-only (veg not vegan), pickled vegetable stalls, and sesame-coated rice crackers</div></div>
+            <div class="food-row"><div class="food-who">Vegetarian</div><div class="food-what">Tamagoyaki (egg roll) fresh off the grill — a Tsukiji classic. Several stalls sell it on a stick, hot. Also: tamago sushi, fruit</div></div>
+            <div class="food-row"><div class="food-who">Pescetarian</div><div class="food-what">Sushi for breakfast — yes, really. Freshest possible fish, counter seats, order omakase for ~¥2,000–3,000. This is the move</div></div>
+            <div class="food-row"><div class="food-who">Meat eaters</div><div class="food-what">Wagyu beef skewer stalls are present alongside the seafood — find them in the inner market alley</div></div>
+          </div>
+        </div>
+        <div class="detail-note"><strong>Safe travels.</strong> Don't forget to tap out of the IC card system at the airport — and check every pocket for yen coins before you board. Japanese vending machines are generous.</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- FOOD GUIDE -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-num">02</div>
+    <div class="section-title">Food guide — eating as a mixed group</div>
+  </div>
+  <div class="food-guide-grid">
+    <div class="food-card">
+      <div class="food-card-label">Strategy</div>
+      <div class="food-card-title">Go for izakaya</div>
+      <div class="food-card-body">Izakayas serve dozens of small shared plates — yakitori for meat eaters, agedashi tofu and grilled veg for vegetarians, sashimi for the pescetarian. One table, everyone's covered. Look for ones with a photo menu.</div>
+    </div>
+    <div class="food-card">
+      <div class="food-card-label">Watch out for</div>
+      <div class="food-card-title">Hidden dashi</div>
+      <div class="food-card-body">Traditional Japanese cooking uses <strong>dashi</strong> (fish stock) as a base in miso soup, noodle broths, and sauces. Dishes that look vegetarian often aren't. Ask: <strong>「だしは何ですか？」</strong> (What is the dashi made from?)</div>
+    </div>
+    <div class="food-card">
+      <div class="food-card-label">For vegans + vegetarians</div>
+      <div class="food-card-title">Safe bets</div>
+      <div class="food-card-body"><strong>Inari sushi</strong> (tofu pockets), <strong>onigiri</strong> with kombu or pickled plum filling, <strong>zaru soba</strong>, vegetable tempura at vegan-specific spots, and T's TanTan in Tokyo Station — fully vegan ramen.</div>
+    </div>
+    <div class="food-card">
+      <div class="food-card-label">For the pescetarian</div>
+      <div class="food-card-title">Spoiled for choice</div>
+      <div class="food-card-body">Conveyor belt sushi (kaiten-zushi), kaisendon sashimi bowls, grilled fish teishoku set meals, prawn tempura. Toyosu Market on Day 3 is the highlight — fresh uni, tuna, salmon at the source.</div>
+    </div>
+    <div class="food-card">
+      <div class="food-card-label">For meat eaters</div>
+      <div class="food-card-title">Don't miss</div>
+      <div class="food-card-body">Wagyu yakiniku, tonkatsu, tonkotsu ramen, yakitori in Omoide Yokocho. Nakano has excellent yakitori alleys 5 min from the accommodation.</div>
+    </div>
+    <div class="food-card">
+      <div class="food-card-label">Must-try for everyone</div>
+      <div class="food-card-title">Konbini culture</div>
+      <div class="food-card-body">7-Eleven, FamilyMart, and Lawson are a food experience. Onigiri, egg salad sandwiches, melon bread, cold matcha. Budget one full konbini breakfast as a group activity — it's part of the trip.</div>
+    </div>
+  </div>
+</div>
+
+<!-- BOOKING -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-num">03</div>
+    <div class="section-title">Book before you land</div>
+  </div>
+  <div class="booking-grid">
+    <div class="booking-card">
+      <div>
+        <div class="booking-name">Kimono rental — Asakusa</div>
+        <div class="booking-detail">Shops like <strong>Wargo</strong> or <strong>Asakusa Sakura</strong> fill up weeks ahead in April. Book all 6 for the same time window — 30–45 min to dress everyone. <strong>Cost: ¥3,000–5,000 pp.</strong> Must be fully paid before sundown <strong>Friday Apr 3</strong> as kimono is worn on Sabbath Apr 4.</div>
+      </div>
+      <span class="booking-urgency urgent">Book now</span>
+    </div>
+    <div class="booking-card">
+      <div>
+        <div class="booking-name">teamLab Planets — Toyosu · Apr 5</div>
+        <div class="booking-detail">Date/time specific, non-refundable. April Sundays sell out weeks ahead. Book at <strong>teamlabplanets.dmm.com</strong> or Klook for 6 in the same slot. Aim for the first entry window. <strong>Cost: ~¥4,600 pp (Sunday) = ~¥27,600 total.</strong></div>
+      </div>
+      <span class="booking-urgency urgent">Book now</span>
+    </div>
+    <div class="booking-card">
+      <div>
+        <div class="booking-name">Tokyo Disneyland — Apr 8</div>
+        <div class="booking-detail">Buy at <strong>tokyodisneyresort.jp</strong> — day passes for 6 can sell out in spring. <strong>Cost: ~¥9,400 pp = ~¥56,400 total.</strong> Arrive at rope drop (8am). Download the Tokyo Disney Resort app for wait times and mobile food ordering.</div>
+      </div>
+      <span class="booking-urgency urgent">Book now</span>
+    </div>
+    <div class="booking-card">
+      <div>
+        <div class="booking-name">Mt. Fuji bus tour — Apr 10 (Friday)</div>
+        <div class="booking-detail">Use <strong>Viator, Klook, or Hato Bus</strong>. Book a tour departing by 8am and returning by <strong>6pm</strong> — Apr 10 is Friday with Sabbath at ~6:20pm. Confirm return time before booking. <strong>Cost: ~¥8,000–12,000 pp.</strong></div>
+      </div>
+      <span class="booking-urgency urgent">Book now</span>
+    </div>
+    <div class="booking-card">
+      <div>
+        <div class="booking-name">Mario Kart / JDM drift — Apr 7</div>
+        <div class="booking-detail">Check <strong>Klook or Viator</strong> for current street karting operators. All participants need a valid driver's license. For JDM drift, look for drift taxi experiences near Tokyo. Book 2–3 weeks out. <strong>Cost: ¥6,000–15,000 pp</strong> depending on type.</div>
+      </div>
+      <span class="booking-urgency soon">Book soon</span>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  <div class="footer-text">Tokyo · April 3–12, 2026 · 6 travelers · Nakano base</div>
+  <div class="footer-jp">東京の旅</div>
+</div>
+
+<script>
+  function toggle(summary) {
+    const row = summary.closest('.day-row');
+    row.classList.toggle('open');
+  }
+</script>
+
+</body>
+</html>
