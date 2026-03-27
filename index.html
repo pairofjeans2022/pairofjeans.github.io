@@ -1144,6 +1144,18 @@
   </div>
 </div>
 
+<!-- WEATHER -->
+<div class="section" id="weather-section">
+  <div class="section-header">
+    <div class="section-num">04</div>
+    <div class="section-title">Weather forecast — Tokyo, April 3–12</div>
+  </div>
+  <p style="font-size:12px;color:var(--muted);margin-bottom:20px;">Live forecast via Open-Meteo. Accuracy improves within 7 days of your trip — check back closer to departure.</p>
+  <div id="weather-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:8px;">
+    <div style="grid-column:1/-1;font-size:12px;color:var(--muted);padding:20px 0;">Loading forecast...</div>
+  </div>
+</div>
+
 <div class="footer">
   <div class="footer-text">Tokyo · April 3–12, 2026 · 6 travelers · Nakano base</div>
   <div class="footer-jp">東京の旅</div>
@@ -1154,6 +1166,64 @@
     const row = summary.closest('.day-row');
     row.classList.toggle('open');
   }
+
+  const DAYS = [
+    {num:1,date:'Apr 3',dow:'Fri',label:'Arrive'},
+    {num:2,date:'Apr 4',dow:'Sat',label:'Sabbath · kimono'},
+    {num:3,date:'Apr 5',dow:'Sun',label:'Shopping'},
+    {num:4,date:'Apr 6',dow:'Mon',label:'Disney'},
+    {num:5,date:'Apr 7',dow:'Tue',label:'Kart night'},
+    {num:6,date:'Apr 8',dow:'Wed',label:'Mt. Fuji'},
+    {num:7,date:'Apr 9',dow:'Thu',label:'Free day 1'},
+    {num:8,date:'Apr 10',dow:'Fri',label:'Free day 2'},
+    {num:9,date:'Apr 11',dow:'Sat',label:'Kawazu'},
+    {num:10,date:'Apr 12',dow:'Sun',label:'Depart'},
+  ];
+
+  function wmoIcon(code) {
+    if (code === 0) return { icon: '☀️', label: 'Clear' };
+    if (code <= 2) return { icon: '⛅', label: 'Partly cloudy' };
+    if (code === 3) return { icon: '☁️', label: 'Overcast' };
+    if (code <= 49) return { icon: '🌫️', label: 'Foggy' };
+    if (code <= 57) return { icon: '🌧️', label: 'Drizzle' };
+    if (code <= 67) return { icon: '🌧️', label: 'Rain' };
+    if (code <= 77) return { icon: '❄️', label: 'Snow' };
+    if (code <= 82) return { icon: '🌦️', label: 'Showers' };
+    if (code <= 99) return { icon: '⛈️', label: 'Thunderstorm' };
+    return { icon: '🌡️', label: 'Unknown' };
+  }
+
+  async function loadWeather() {
+    const grid = document.getElementById('weather-grid');
+    try {
+      const url = 'https://api.open-meteo.com/v1/forecast?latitude=35.6895&longitude=139.6917&daily=weathercode,temperature_2m_max,temperature_2m_min,precipitation_probability_max&timezone=Asia%2FTokyo&start_date=2026-04-03&end_date=2026-04-12&temperature_unit=fahrenheit';
+      const res = await fetch(url);
+      const data = await res.json();
+      const d = data.daily;
+
+      grid.innerHTML = DAYS.map((day, i) => {
+        const code = d.weathercode[i];
+        const { icon, label } = wmoIcon(code);
+        const hi = Math.round(d.temperature_2m_max[i]);
+        const lo = Math.round(d.temperature_2m_min[i]);
+        const rain = d.precipitation_probability_max[i];
+        const rainColor = rain >= 70 ? '#c84b2f' : rain >= 40 ? '#b8923a' : '#2a6049';
+
+        return `<div style="background:white;border:0.5px solid var(--faint);border-radius:var(--border-radius-lg);padding:12px 10px;text-align:center;">
+          <div style="font-size:10px;font-weight:500;color:var(--muted);letter-spacing:.05em;text-transform:uppercase;margin-bottom:2px;">${day.dow} ${day.date}</div>
+          <div style="font-size:9px;color:var(--muted);margin-bottom:8px;">${day.label}</div>
+          <div style="font-size:26px;line-height:1;margin-bottom:6px;">${icon}</div>
+          <div style="font-size:10px;color:var(--ink);margin-bottom:6px;">${label}</div>
+          <div style="font-size:13px;font-weight:500;color:var(--ink);margin-bottom:4px;">${hi}° <span style="font-weight:300;color:var(--muted);">/ ${lo}°F</span></div>
+          <div style="font-size:10px;color:${rainColor};">&#9748; ${rain}% rain</div>
+        </div>`;
+      }).join('');
+    } catch(e) {
+      grid.innerHTML = '<div style="grid-column:1/-1;font-size:12px;color:var(--muted);padding:12px 0;">Forecast unavailable — check <a href="https://www.weather.com/weather/tenday/l/Tokyo+Japan" target="_blank" style="color:var(--accent2)">weather.com</a> closer to your trip.</div>';
+    }
+  }
+
+  loadWeather();
 </script>
 
 </body>
