@@ -497,6 +497,32 @@
     <span>×2 <strong>meat eaters</strong></span>
     <span>Peak cherry blossom season</span>
   </div>
+
+  <!-- CURRENCY CALCULATOR -->
+  <div id="calc-bar" style="margin-top:16px;background:white;border:0.5px solid var(--faint);border-radius:var(--border-radius-lg);padding:12px 16px;">
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;cursor:pointer;" onclick="toggleCalc()">
+      <span style="font-size:16px;">🧮</span>
+      <span style="font-size:12px;font-weight:500;color:var(--ink);">¥ ↔ $ Currency Calculator</span>
+      <span id="calc-chevron" style="font-size:10px;color:var(--muted);margin-left:auto;">▾</span>
+    </div>
+    <div id="calc-body">
+      <div style="display:grid;grid-template-columns:1fr auto 1fr;gap:8px;align-items:center;">
+        <div>
+          <div style="font-size:10px;color:var(--muted);margin-bottom:4px;letter-spacing:.04em;text-transform:uppercase;">Yen ¥</div>
+          <input id="yen-input" type="number" placeholder="e.g. 3000" oninput="convertFromYen()" style="width:100%;padding:8px 10px;border:0.5px solid var(--faint);border-radius:var(--border-radius-md);font-size:15px;color:var(--ink);background:var(--paper);font-family:var(--font-sans);">
+        </div>
+        <div style="font-size:18px;color:var(--muted);padding-top:18px;text-align:center;">⇌</div>
+        <div>
+          <div style="font-size:10px;color:var(--muted);margin-bottom:4px;letter-spacing:.04em;text-transform:uppercase;">USD $</div>
+          <input id="usd-input" type="number" placeholder="e.g. 20" oninput="convertFromUSD()" style="width:100%;padding:8px 10px;border:0.5px solid var(--faint);border-radius:var(--border-radius-md);font-size:15px;color:var(--ink);background:var(--paper);font-family:var(--font-sans);">
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-top:10px;">
+        <div id="calc-rate-label" style="font-size:11px;color:var(--muted);">Live rate loading...</div>
+        <button onclick="fetchRate()" style="font-size:10px;color:var(--accent2);background:none;border:none;cursor:pointer;font-family:var(--font-sans);padding:0;">↻ Refresh rate</button>
+      </div>
+    </div>
+  </div>
 </div>
 
 <!-- ITINERARY -->
@@ -1260,6 +1286,49 @@
 </div>
 
 <script>
+  let exchangeRate = 150;
+
+  async function fetchRate() {
+    document.getElementById('calc-rate-label').textContent = 'Fetching live rate...';
+    try {
+      const res = await fetch('https://api.frankfurter.app/latest?from=USD&to=JPY');
+      const data = await res.json();
+      exchangeRate = data.rates.JPY;
+      document.getElementById('calc-rate-label').textContent = `Live rate: $1 = ¥${exchangeRate.toFixed(2)} · Updated just now`;
+      convertFromYen();
+    } catch(e) {
+      document.getElementById('calc-rate-label').textContent = `Fallback rate: $1 = ¥150 (offline)`;
+    }
+  }
+
+  function convertFromYen() {
+    const yen = parseFloat(document.getElementById('yen-input').value);
+    if (!isNaN(yen)) {
+      document.getElementById('usd-input').value = (yen / exchangeRate).toFixed(2);
+    } else {
+      document.getElementById('usd-input').value = '';
+    }
+  }
+
+  function convertFromUSD() {
+    const usd = parseFloat(document.getElementById('usd-input').value);
+    if (!isNaN(usd)) {
+      document.getElementById('yen-input').value = Math.round(usd * exchangeRate);
+    } else {
+      document.getElementById('yen-input').value = '';
+    }
+  }
+
+  function toggleCalc() {
+    const body = document.getElementById('calc-body');
+    const chevron = document.getElementById('calc-chevron');
+    const isHidden = body.style.display === 'none';
+    body.style.display = isHidden ? 'block' : 'none';
+    chevron.textContent = isHidden ? '▾' : '▸';
+  }
+
+  fetchRate();
+
   function toggle(summary) {
     const row = summary.closest('.day-row');
     row.classList.toggle('open');
